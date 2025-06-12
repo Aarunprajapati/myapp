@@ -6,9 +6,10 @@ class CoffeeTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 0.0, bottom: 25),
+      padding: const EdgeInsets.only(left: 25.0, bottom: 25.0),
       child: Container(
         width: 200,
+        height: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.black54,
@@ -23,7 +24,7 @@ class CoffeeTiles extends StatelessWidget {
                 child: Image.asset(
                   'lib/images/latte.jpg',
                   width: 190,
-                  height: 120,
+                  height: 130,
                   fit: BoxFit.cover,
                 ),
               ),

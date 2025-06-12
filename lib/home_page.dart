@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/utils/coffee_tiles.dart';
+import 'package:myapp/utils/coffee_types.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +11,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List coffeeType = [
+    ['Cappuccino', true],
+    ['Latte', false],
+    ['Black', false],
+    ['Tea', false],
+  ];
+  // user taped on coffee Type
+  void coffeeTypeSelected(index) {
+    setState(() {
+      for (int i = 0; i < coffeeType.length; i++) {
+        coffeeType[i][1] = false;
+      }
+      coffeeType[index][1] = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,34 +54,65 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ""),
         ],
       ),
-      body: Padding(
-        // find the best coffee for you
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Find the best coffee for you",
-              style: GoogleFonts.bebasNeue(fontSize: 40),
+            // Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Text(
+                "Find the best coffee for you",
+                style: GoogleFonts.bebasNeue(fontSize: 40, color: Colors.white),
+              ),
             ),
-            SizedBox(height: 25.0),
-            // search bar
-            TextField(
-              decoration: InputDecoration(
-                prefix: Icon(Icons.search),
-                hintText: "Find your coffee...",
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade600),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade600),
+
+            const SizedBox(height: 25),
+
+            // Search bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: "Find your coffee...",
+                  hintStyle: TextStyle(color: Colors.grey[400]),
+                  filled: true,
+                  fillColor: Colors.grey[800],
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade600),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey.shade600),
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 25.0),
-            Expanded(
+
+            const SizedBox(height: 25),
+
+            // Horizontal Coffee Tiles List
+            SizedBox(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: coffeeType.length,
+                itemBuilder: (context, index) {
+                  return CoffeeType(
+                    coffeType: coffeeType[index][0],
+                    isSelected: coffeeType[index][1],
+                    onTap: () {
+                      coffeeTypeSelected(index);
+                    },
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 280, // enough height to show your tile fully
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: [CoffeeTiles()],
+                children: const [CoffeeTiles(), CoffeeTiles(), CoffeeTiles()],
               ),
             ),
           ],
