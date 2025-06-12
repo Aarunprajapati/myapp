@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/utils/coffee_tiles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +22,12 @@ class _HomePageState extends State<HomePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: Icon(Icons.person),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(24.0),
+              hoverColor: Colors.grey,
+              onTap: () {},
+              child: Icon(Icons.person),
+            ),
           ),
         ],
       ),
@@ -52,6 +59,13 @@ class _HomePageState extends State<HomePage> {
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey.shade600),
                 ),
+              ),
+            ),
+            SizedBox(height: 25.0),
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [CoffeeTiles()],
               ),
             ),
           ],
